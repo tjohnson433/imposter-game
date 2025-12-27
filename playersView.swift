@@ -3,10 +3,16 @@ import SwiftUI
 struct playersView : View {
     
     let numberPickerPicked: Int
-    let wordPair = getRandomPair()
     
     @State private var imposter = 1
     @Environment(\.dismiss) var dismiss
+    
+    @Binding var shuffledDeck: [WordAndHint]
+    @Binding var currentIndex: Int
+    
+    var wordPair: WordAndHint {
+        shuffledDeck[currentIndex]
+    }
     
     var body: some View {
         ZStack {
@@ -39,41 +45,77 @@ struct PlayerView : View {
        // NavigationStack {
             ZStack {
                 if playerNumber == 1 {
-                    Color.blue
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.blue, .teal],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                    
                 } else if playerNumber == 2 {
-                    Color.orange
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.orange, .yellow],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                    
                 } else if playerNumber == 3 {
-                    Color.green
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.green, .yellow],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 4 {
-                    Color.red
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.red, .orange.opacity(0.8)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 5 {
-                    Color.yellow
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.yellow, .pink],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 6 {
-                    Color.purple
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.purple, .pink],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 7 {
-                    Color.cyan
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.cyan, .green],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 8 {
-                    Color.indigo
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.indigo, .purple],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 } else if playerNumber == 9 {
-                    Color.mint
-                        .opacity(0.7)
-                        .ignoresSafeArea()
+                    LinearGradient(
+                        colors: [.mint, .blue],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                } else if playerNumber == 10 {
+                    LinearGradient(
+                        colors: [.yellow, .purple],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
                 }
                 
                 VStack {
@@ -84,7 +126,38 @@ struct PlayerView : View {
                                 Image(systemName: "chevron.left")
                                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                                     .padding()
-                                Spacer()
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                            .fill(.ultraThinMaterial)
+                                            .overlay {
+                                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                                    .fill (
+                                                        LinearGradient(
+                                                            colors: [
+                                                                .white.opacity(0.35),
+                                                                .white.opacity(0.1),
+                                                                .clear
+                                                            ],
+                                                            startPoint: .topLeading,
+                                                            endPoint: .bottomTrailing
+                                                            
+                                                        )
+                                                    )
+                                            }
+                                    }
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .strokeBorder(
+                                                LinearGradient(
+                                                    colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                ),
+                                                lineWidth: 1.5
+                                            )
+                                    }
+                                    .shadow(color: .black.opacity(0.15), radius: 10, y: 4)
+                                Spacer().frame(width: 87)
                                 }
                         .foregroundColor(.white)
                         
@@ -98,6 +171,37 @@ struct PlayerView : View {
                                 Image(systemName: "chevron.right")
                                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                                     .padding()
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                            .fill(.ultraThinMaterial)
+                                            .overlay {
+                                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                                    .fill (
+                                                        LinearGradient(
+                                                            colors: [
+                                                                .white.opacity(0.35),
+                                                                .white.opacity(0.1),
+                                                                .clear
+                                                            ],
+                                                            startPoint: .topLeading,
+                                                            endPoint: .bottomTrailing
+                                                            
+                                                        )
+                                                    )
+                                            }
+                                    }
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .strokeBorder(
+                                                LinearGradient(
+                                                    colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                ),
+                                                lineWidth: 1.5
+                                            )
+                                    }
+                                    .shadow(color: .black.opacity(0.15), radius: 10, y: 4)
                             }
                             .foregroundColor(.white)
                         } else {
@@ -110,10 +214,41 @@ struct PlayerView : View {
                                 wordPair: wordPair,
                                 
                             )) {
-                                Spacer()
+                                Spacer().frame(width: 87)
                                 Image(systemName: "chevron.right")
                                     .font(.system(size: 15, weight: .heavy, design: .rounded))
                                     .padding()
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                            .fill(.ultraThinMaterial)
+                                            .overlay {
+                                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                                    .fill (
+                                                        LinearGradient(
+                                                            colors: [
+                                                                .white.opacity(0.35),
+                                                                .white.opacity(0.1),
+                                                                .clear
+                                                            ],
+                                                            startPoint: .topLeading,
+                                                            endPoint: .bottomTrailing
+                                                            
+                                                        )
+                                                    )
+                                            }
+                                    }
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .strokeBorder(
+                                                LinearGradient(
+                                                    colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                ),
+                                                lineWidth: 1.5
+                                            )
+                                    }
+                                    .shadow(color: .black.opacity(0.15), radius: 10, y: 4)
                             }
                             .foregroundColor(.white)
                         }
@@ -124,8 +259,42 @@ struct PlayerView : View {
                     isImposterRevealed.toggle()
                 }) {
                     Text(isImposterRevealed ? amITheImposter ? "You're the imposter...\nThe hint is \(wordPair.hint) " : "You're an investigator...\nThe word is \(wordPair.word) ": "Tap to reveal")
-                        .font(.system(size: 20, weight: .heavy, design: .rounded))
-                        .foregroundColor(.white)
+                            .font(.system(size: 21, weight: .heavy, design: .rounded))
+                            .bold()
+                            .foregroundStyle(.white)
+                            .padding(.vertical, 18)
+                            .padding(.horizontal, 40)
+                            .background {
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .fill(.ultraThinMaterial)
+                                    .overlay {
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                            .fill (
+                                                LinearGradient(
+                                                    colors: [
+                                                        .white.opacity(0.35),
+                                                        .white.opacity(0.1),
+                                                        .clear
+                                                    ],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                    
+                                                )
+                                            )
+                                    }
+                            }
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .strokeBorder(
+                                        LinearGradient(
+                                            colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 1.5
+                                    )
+                            }
+                            .shadow(color: .black.opacity(0.15), radius: 10, y: 4)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -134,6 +303,14 @@ struct PlayerView : View {
 
 
 #Preview {
-    playersView(numberPickerPicked: 3)
+    @Previewable @State var previewDeck: [WordAndHint] = allWordPairs.shuffled()
+    @Previewable @State var previewIndex: Int = 0
+
+    playersView(
+        numberPickerPicked: 4,
+        shuffledDeck: $previewDeck,
+        currentIndex: $previewIndex
+    )
 }
+
 
